@@ -12,6 +12,17 @@ class PostsIndex extends Component {
 		//console.log('this will render first time ');
 	}
 
+	renderPosts() {
+		return this.props.posts.map((posts) => {
+			return(
+				<li className="list-group-item" key={post.id}>
+				<span className="pull-xs-right">{post.categories}</span>
+				<strong>{post.title}</string>
+				</li>
+			);
+		});
+	}
+
 	render() {
 		return (
 			<div className="container"> 
@@ -20,13 +31,20 @@ class PostsIndex extends Component {
 						Create New Post
 					</Link>
 				</div>
-			List of blog Posts
+			<h3>Posts</h3>
+			<ul className="list-group">
+				{this.renderPosts()}
+			</ul>
 			</div>
 		);
 	}
 }
 
-// function mapDispatchToProps(dispatch) {
+function mapStateToProps(state) {
+	return { posts: state.posts.all }
+}
+
+// function mapDispatchToProps(state) {
 // 	return bindActionCreators({ fetchPosts }, dispatch);
 // }
 
