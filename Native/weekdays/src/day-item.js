@@ -19,7 +19,7 @@ class DayItem extends Component {
 const styles = StyleSheet.create({
   day: {
     fontSize: 18,
-    color: '#2a2a3a',
+    color: '#6677ff',
   }
 })
 

@@ -6,6 +6,7 @@ import React, {
   Text,
   View,
 } from 'react-native';
+import Moment from 'moment';
 import DayItem from './src/day-item';
 
 const DAYS = ['Sunday', 'Monday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ,'Sunday'];
@@ -16,16 +17,28 @@ const DAYS = ['Sunday', 'Monday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' 
 class Weekdays extends Component {
 
   render () {
-    return (
+    return(
       <View style={styles.container}>
         <Text >
           Days of the week: 
         </Text>
-        <DayItem day={DAYS[0]}/>
+        <Text>
+          {Moment().format('ddd')}
+        </Text>
+        {this.days()}
       </View>
     )
   }
+    days(){
+    return DAYS.map(function(day){
+      // Called 7 times, one for each day of the week
+      return <DayItem day={day} />
+    });
+  }
 }
+
+
+
 //Style the React Component 
 
 const styles = StyleSheet.create({
