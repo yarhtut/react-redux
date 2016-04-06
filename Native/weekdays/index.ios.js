@@ -30,11 +30,22 @@ class Weekdays extends Component {
     )
   }
     days(){
-    return DAYS.map(function(day){
-      // Called 7 times, one for each day of the week
-      return <DayItem day={day} />
-    });
-  }
+    // return DAYS.map(function(day){
+    //   // Called 7 times, one for each day of the week
+    //   return <DayItem day={day} />
+
+    var daysItems = [];
+
+      for (var i = 0; i < 7; i++) {
+        var day = Moment().add(i, 'days').format('dddd');
+        daysItems.push(
+            <DayItem day={day} daysUntil={i} />
+          )
+      }
+
+      return daysItems
+    }
+  
 }
 
 
