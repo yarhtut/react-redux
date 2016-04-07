@@ -15,37 +15,75 @@ class stopwatch extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Shake or press menu button for dev menu
-        </Text>
+        <View style={[styles.header, this.border('yellow')]}>
+          <View style={this.border('red')}>
+            <Text >
+              00:00.00
+            </Text>
+          </View>
+          <View style={this.border('green')}>
+            {this.startStopButton()}
+            {this.lapButton()}
+          </View>
+        </View>
+
+        <View style={ [styles.footer, this.border('blue')]}>
+          <Text>
+            I am a list of Laps
+          </Text>
+        </View>
+
       </View>
     );
+  }
+  startStopButton() {
+    return (
+      <View>
+        <Text>
+          Start
+        </Text>
+      </View>
+      )
+  }
+  lapButton() {
+  return (
+    <View>
+      <Text>
+        Lap
+      </Text>
+    </View>
+    )
+  }
+  handleStartPress() {
+    var startTime = new Date();
+
+    () => {
+      this.setState({
+        timeElapsed: new Date()- startTime
+      })
+    }
+  }
+
+  border(color){
+    return {
+      borderColor: color,
+      borderWidth: 4
+    }
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    alignItems: 'stretch'
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+
+  header: {
+    flex:1
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  footer: {
+    flex:1
+  }
 });
 
 AppRegistry.registerComponent('stopwatch', () => stopwatch);
