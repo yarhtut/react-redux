@@ -15,7 +15,7 @@ class stopwatch extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={[styles.header, this.border('yellow')]}> 
+        <View style={[styles.header, this.border('yellow')]}>
           <View style={this.border('red')}>
             <Text >
               00:00.00
@@ -26,7 +26,7 @@ class stopwatch extends Component {
             {this.lapButton()}
           </View>
         </View>
-        
+
         <View style={ [styles.footer, this.border('blue')]}>
           <Text>
             I am a list of Laps
@@ -54,6 +54,16 @@ class stopwatch extends Component {
     </View>
     )
   }
+  handleStartPress() {
+    var startTime = new Date();
+
+    () => {
+      this.setState({
+        timeElapsed: new Date()- startTime
+      })
+    }
+  }
+
   border(color){
     return {
       borderColor: color,
@@ -64,7 +74,7 @@ class stopwatch extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
+    flex: 1,
     alignItems: 'stretch'
   },
 
