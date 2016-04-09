@@ -15,25 +15,26 @@ import formatTime from 'minutes-seconds-milliseconds';
 class learning extends Component {
   getInitialState () {
     return {
-      timeElapsed: null
+      timeElapsed: null,
+      running: false
     }
   }
   render() {
     return (
       <View style={styles.container}>
-        <View style={[styles.header, this.border('yellow')]}>
-          <View style={[styles.timerWrapper, this.border('red')]}>
-            <Text >
+        <View style={styles.header}>
+          <View style={[styles.timerWrapper]}>
+            <Text styles={styles.timmer}>
               {formatTime (this.state.timeElapsed)}
             </Text>
           </View>
-          <View style={[styles.buttonWrapper, this.border('green')]}>
+          <View style={styles.buttonWrapper}>
             {this.startStopButton()}
             {this.lapButton()}
           </View>
         </View>
 
-        <View style={ [styles.footer, this.border('blue')]}>
+        <View style={styles.footer}>
           <Text>
             I am a list of Laps
           </Text>
@@ -43,18 +44,20 @@ class learning extends Component {
     );
   }
   startStopButton() {
+    var style = this.state.running ? styles.stopButton: styles.startButton;
     return (
       <TouchableHighlight underlayColor="gray"
-      onPress={this.handleStartPress}>
+      onPress={this.handleStartPress}
+      style={ [styles.startButton, styles.button] }>
         <Text>
-          Start
+          {this.state.running ? 'Stop' : 'Start'}
         </Text>
       </TouchableHighlight>
       )
   }
   lapButton() {
   return (
-    <View>
+    <View style={styles.button}>
       <Text>
         Lap
       </Text>
@@ -62,11 +65,18 @@ class learning extends Component {
     )
   }
   handleStartPress() {
+    if(this.staterunning) {
+      clearInterval(this.interval);
+      this.setState({running: false});
+      return
+    }
+
     var startTime = new Date();
 
-    setInterval(() => {
+    this.interval = setInterval(() => {
       this.setState({
-        timeElapsed: new  Date()- startTime
+        timeElapsed: new  Date()- startTime,
+        running: true
       });
     },30);
   }
@@ -96,6 +106,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  timmer: {
+    fontSize: 60
+  },
+  button: {
+    borderWidth: 2,
+    height: 100,
+    width: 100,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  startButton: {
+    borderColor: '#00cc00'
+  },
+  stopButton :{
+    borderColor: '#CC0000'
   },
   buttonWrapper: {
     flex: 3,
