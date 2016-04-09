@@ -13,10 +13,12 @@ import React, {
 import formatTime from 'minutes-seconds-milliseconds';
 
 class learning extends Component {
-  getInitialState () {
+  getInitialState() {
     return {
       timeElapsed: null,
-      running: false
+      running: false,
+      startTime: null,
+      lap: []
     }
   }
   render() {
@@ -25,7 +27,7 @@ class learning extends Component {
         <View style={styles.header}>
           <View style={[styles.timerWrapper]}>
             <Text styles={styles.timmer}>
-              {formatTime (this.state.timeElapsed)}
+              {formatTime(this.state.timeElapsed)}
             </Text>
           </View>
           <View style={styles.buttonWrapper}>
@@ -36,12 +38,26 @@ class learning extends Component {
 
         <View style={styles.footer}>
           <Text>
-            I am a list of Laps
+            {this.laps()}
           </Text>
         </View>
 
       </View>
     );
+  }
+  laps() {
+    return this.state.laps.map(function(time,index) {
+      return (
+        <View>
+          <Text>
+          Lap #{index + 1 }
+          </Text>
+          <Text>
+            {formatTime(time)}
+          </Text>
+        </View>
+      )
+    })
   }
   startStopButton() {
     var style = this.state.running ? styles.stopButton: styles.startButton;
@@ -55,15 +71,28 @@ class learning extends Component {
       </TouchableHighlight>
       )
   }
+
   lapButton() {
   return (
-    <View style={styles.button}>
+    <TouchableHighlight style={styles.button}
+    underlayColor="gray"
+    onPress={this.handleLapPress}>
       <Text>
         Lap
       </Text>
-    </View>
+    </TouchableHighlight>
     )
   }
+
+  handleLapPress() {
+    var lap = this.state.timeElapsed;
+
+    this.setState({
+      startTime : new Date(),
+      laps: this.state.laps.concat([lap])
+    })
+  }
+
   handleStartPress() {
     if(this.staterunning) {
       clearInterval(this.interval);
@@ -72,6 +101,7 @@ class learning extends Component {
     }
 
     var startTime = new Date();
+    this.setState({startTime: new Date()});
 
     this.interval = setInterval(() => {
       this.setState({
