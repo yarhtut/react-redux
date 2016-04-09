@@ -18,7 +18,7 @@ class learning extends Component {
       timeElapsed: null,
       running: false,
       startTime: null,
-      lap: []
+      laps: []
     }
   }
   render() {
@@ -48,8 +48,8 @@ class learning extends Component {
   laps() {
     return this.state.laps.map(function(time,index) {
       return (
-        <View>
-          <Text>
+        <View style={styles.lap}>
+          <Text style={styles.lapText}>
           Lap #{index + 1 }
           </Text>
           <Text>
@@ -159,6 +159,13 @@ const styles = StyleSheet.create({
     flexDirection:  'row',
     justifyContent: 'space-around',
     alignItems: 'center'
+  },
+  lap: {
+    justifyContent: 'space-around',
+    flexDirection: 'row'
+  },
+  lapText: {
+    fontSize: 30
   }
 });
 
