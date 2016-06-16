@@ -1,19 +1,26 @@
 import React from 'react';
-import { Router , Route, Link, IndexRoute, browserHistory } from 'react-router';
+import { Router , Route, Link, IndexRoute, Redirect,browserHistory } from 'react-router';
 
-const Page = (props) =>
-    <div><h1>{props.location.query.message || 'Hello'}</h1><Links /></div>
+const Home = () => <div><Links /><h1>Home</h1></div>
+const About = () => <div><Links /><h1>About</h1></div>
+const Contact = () => <div><Links /><h1>Contact</h1></div>
 
 const Links = () =>
     <nav>
-        <Link to={{ pathname: '/', query: { message: 'Yo'}} }>Yo</Link>
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+        <Link to="/contact">Contact</Link>
+        <Link to="/redirect">Redirect</Link>
     </nav>
 
 class App extends React.Component {
     render() {
         return (
             <Router histroy = { browserHistory }>
-                <Route path="/" component={Page}></Route>
+                <Route path="/" component={Home}></Route>
+                <Route path="/about" component={About}></Route>
+                <Route path="/contact" component={Contact}></Route>
+                <Redirect from="redirect" to="/about"></Redirect>
             </Router>
         )
     }
