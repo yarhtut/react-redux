@@ -1,28 +1,44 @@
 import React from 'react';
-import { Router , Route, Link, IndexRoute, Redirect,browserHistory } from 'react-router';
+import { Router, Route, Link, browserHistory } from 'react-router';
 
-const Home = () => <div><Links /><h1>Home</h1></div>
-const About = () => <div><Links /><h1>About</h1></div>
-const Contact = () => <div><Links /><h1>Contact</h1></div>
+// const Home = () => <div><h1>Home</h1><Links /></div>;
 
-const Links = () =>
-    <nav>
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
-        <Link to="/contact">Contact</Link>
-        <Link to="/redirect">Redirect</Link>
-    </nav>
+class Home extends React.Component {
+  componentWillMount(){
+    const { route } = this.props
+    const { router } = this.context
+    router.setRouteLeaveHook(route, this.routerWillLeave)
 
-class App extends React.Component {
-    render() {
-        return (
-            <Router histroy = { browserHistory }>
-                <Route path="/" component={Home}></Route>
-                <Route path="/about" component={About}></Route>
-                <Route path="/contact" component={Contact}></Route>
-                <Redirect from="redirect" to="/about"></Redirect>
-            </Router>
-        )
-    }
+  }
+
+  routerWillLeave( nextLocation ){
+    return `leaving home for ${nextLocation.pathname}`
+  }
+
+  render(){
+    return <div><h1>Home</h1><Links /></div>;
+  }
 }
+
+Home.contextTypes = { router: React.PropTypes.object.isRequired }
+
+const About = () => <div><h1>About</h1><Links /></div>;
+const Links = () => {
+  return (
+    <nav>
+      <Link to="/">Home</Link>
+      <Link to="about">About</Link>
+    </nav>
+  )
+};
+
+const App = () => {
+  return (
+    <Router history={ browserHistory }>
+      <Route path="/" component={Home}></Route>
+      <Route path="/about" component={About}></Route>
+    </Router>
+  )
+};
+
 export default App;
